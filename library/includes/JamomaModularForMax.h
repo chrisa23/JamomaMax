@@ -45,7 +45,9 @@ extern JAMOMA_EXPORT	TTString*			HelpPatcherFormat;		///<
 extern JAMOMA_EXPORT	TTString*			RefpageFormat;			///<
 extern JAMOMA_EXPORT	TTString*			DocumentationFormat;	///<
 
-#define ModelPatcher "model" 
+typedef TTString::iterator TTStringIter;
+
+#define ModelPatcher "model"
 #define ViewPatcher "view"
 
 #define JamomaDebug if (accessApplicationLocalDebug)
@@ -187,7 +189,7 @@ TTErr JAMOMA_EXPORT jamoma_receiver_create_audio(t_object *x, TTObject& returned
 // Method to deal with TTPresetManager and TTCueManager
 ///////////////////////////////////////////////////////////////////////
 
-/**	Create a #TTPresetManager object. 
+/**	Create a #TTPresetManager object.
  @param x
  @param returnedPresetManager
  @return						#TTErr error message if the method does not execute as expected.
@@ -215,7 +217,7 @@ TTErr JAMOMA_EXPORT jamoma_cueManager_create(t_object *x, TTObject& returnedCueM
 TTErr JAMOMA_EXPORT jamoma_input_create(t_object *x, TTObject& returnedInput);
 
 
-/**	Create a #TTInput object for audio signal. 
+/**	Create a #TTInput object for audio signal.
  @param x
  @param returnedInput
  @return						#TTErr error message if the method does not execute as expected.
@@ -308,7 +310,7 @@ TTErr JAMOMA_EXPORT jamoma_viewer_send(TTObject& aViewer, t_symbol *msg, long ar
 TTErr JAMOMA_EXPORT jamoma_explorer_create(t_object *x, TTObject& returnedExplorer);
 
 
-/** 
+/**
  @return
  */
 TTHashPtr JAMOMA_EXPORT jamoma_explorer_default_filter_bank(void);
@@ -352,7 +354,7 @@ void JAMOMA_EXPORT jamoma_callback_return_address(const TTValue& baton, const TT
 void JAMOMA_EXPORT jamoma_callback_return_value(const TTValue& baton, const TTValue& v);
 
 
-/** Return the value to a j.* external as msg, argc, argv. The msg part carries information about what type of atom(s) we are getting, 
+/** Return the value to a j.* external as msg, argc, argv. The msg part carries information about what type of atom(s) we are getting,
  @param baton       The Max wrapper object
  @param v           The value(s) being passed back. This is passed back as an array of three argumens: msg, argc and argv
  */
@@ -384,7 +386,7 @@ t_object *JAMOMA_EXPORT jamoma_patcher_get(t_object *obj);
 
 
 /** Convenient method to get the patcher argument easily.
- In poly case it also return the voice index (0 else) 
+ In poly case it also return the voice index (0 else)
  @param patcher
  @param argc					The number of arguments of the message.
  @param argv					Pointer to the array of arguments.
@@ -444,7 +446,7 @@ void JAMOMA_EXPORT jamoma_patcher_share_node(t_object *obj, TTNodePtr *patcherNo
  */
 TTErr JAMOMA_EXPORT jamoma_patcher_get_info(t_object *obj, t_object **returnedPatcher, TTSymbol& returnedContext, TTSymbol& returnedClass, TTSymbol& returnedName);
 
-/** Get j.model or j.view of a patcher 
+/** Get j.model or j.view of a patcher
  @param patcher
  @param returnedModelOrView
  */
@@ -488,7 +490,7 @@ void JAMOMA_EXPORT jamoma_ttvalue_to_typed_Atom(const TTValue& v, t_symbol **msg
 void JAMOMA_EXPORT jamoma_ttvalue_to_Atom(const TTValue& v, long *argc, t_atom **argv);
 
 
-/** Make a #TTValue from Atom array. 
+/** Make a #TTValue from Atom array.
  @param v
  @param msg
  @param argc					The number of arguments of the message.
@@ -580,6 +582,6 @@ TTSymbol JAMOMA_EXPORT jamoma_file_write(t_object *x, long argc, const t_atom *a
 TTSymbol JAMOMA_EXPORT jamoma_file_read(t_object *x, long argc, const t_atom *argv, t_fourcc filetype);
 
 #endif // __JAMOMA_MODULAR_FOR_MAX_H__
-	
+
 
 

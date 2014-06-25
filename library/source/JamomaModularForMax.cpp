@@ -16,10 +16,10 @@
 #include "JamomaModularForMax.h"
 
 /***********************************************************************************
-*
-*		C EXTERN METHODS
-*
-************************************************************************************/
+ *
+ *		C EXTERN METHODS
+ *
+ ************************************************************************************/
 
 
 // Method to deal with TTSubscriber
@@ -32,7 +32,7 @@ TTErr jamoma_subscriber_create(t_object *x, TTObject& anObject, TTAddress relati
 	TTAddress	newRelativeAddress, newContextAddress;
 	TTBoolean	newInstance, newContextInstance;
     TTErr       err;
-		
+    
 	// prepare arguments
 	args.append(anObject);
 	args.append(relativeAddress);
@@ -77,7 +77,7 @@ TTErr jamoma_subscriber_create(t_object *x, TTObject& anObject, TTAddress relati
                 
 				returnedSubscriber.get("contextAddress", v);
 				newContextAddress = v[0];
-
+                
                 t_object *patcher;
                 TTSymbol  patcherContext;
                 TTSymbol  patcherClass;
@@ -112,11 +112,11 @@ TTErr jamoma_subscriber_create(t_object *x, TTObject& anObject, TTAddress relati
                 // if no name has been provided
                 if (patcherArg == kTTAdrsEmpty)
                     object_warn(patcher, "No name provided to %s %s. Using %s.", patcherClass.c_str(), patcherContext.c_str(), newContextAddress.getNameInstance().c_str());
-
+                
                 // if a duplicate name.instance was passed in argument
                 else
                     object_warn(patcher, "Duplicate name provided to %s %s (%s). Using %s.", patcherClass.c_str(), patcherContext.c_str(), patcherArg.c_str(), newContextAddress.getNameInstance().c_str());
-
+                
 			}
             
             returnedSubscriber.get(kTTSym_nodeAddress, v);
@@ -124,7 +124,7 @@ TTErr jamoma_subscriber_create(t_object *x, TTObject& anObject, TTAddress relati
 			
 			JamomaDebug object_post(x, "registers at %s", returnedAddress.c_str());
 		}
-
+        
 		return kTTErrNone;
 	}
 	
@@ -147,7 +147,7 @@ void jamoma_subscriber_get_patcher_list(t_object *x, TTList& aContextListToFill)
 	TTSymbol	patcherClass;
 	TTSymbol	lowerContext;
 	
-	// Edit the list of all patcher's name and pointer 
+	// Edit the list of all patcher's name and pointer
 	// above the object x looking at all parent patcher
 	do {
 		// get all info from the current object
@@ -226,7 +226,7 @@ TTErr jamoma_container_send(TTObject& aContainer, t_symbol *relativeAddressAndAt
 			anAddress = anAddress.appendAttribute(kTTSym_value);
 		else
 			anAddress = anAddress.appendAttribute(ToTTName(anAddress.getAttribute()));
-
+        
 		data.append(anAddress);
 		
 		jamoma_ttvalue_from_Atom(v, _sym_nothing, argc, argv);
@@ -311,7 +311,7 @@ TTErr jamoma_sender_send(TTObject& aSender, t_symbol *msg, long argc, const t_at
 	if (aSender.valid()) {
 		
 		jamoma_ttvalue_from_Atom(v, msg, argc, argv);
-
+        
 		return aSender.send(kTTSym_Send, v, none);
 	}
 	
@@ -399,7 +399,7 @@ TTErr jamoma_cueManager_create(t_object *x, TTObject& returnedCueManager)
 
 /**	Create an input object for any signal */
 TTErr jamoma_input_create(t_object *x, TTObject& returnedInput)
-{	
+{
 	TTValue		baton;
 	TTObject	signalOutCallback;
 	
@@ -423,7 +423,7 @@ TTErr jamoma_input_create_audio(t_object *x, TTObject& returnedInput)
 
 /**	Send any signal to an input object */
 TTErr jamoma_input_send(TTObject& anInput, t_symbol *msg, long argc, const t_atom *argv)
-{	
+{
 	TTValue v, none;
 	
 	if (anInput.valid()) {
@@ -442,7 +442,7 @@ TTErr jamoma_input_send(TTObject& anInput, t_symbol *msg, long argc, const t_ato
 
 /**	Create an output object for signal */
 TTErr jamoma_output_create(t_object *x, TTObject& returnedOutput)
-{	
+{
 	TTValue		baton;
 	TTObject	signalOutCallback;
 	
@@ -467,7 +467,7 @@ TTErr jamoma_output_create_audio(t_object *x, TTObject& returnedOutput)
 
 /**	Send any signal to an output object */
 TTErr jamoma_output_send(TTObject& anOutput, t_symbol *msg, long argc, const t_atom *argv)
-{	
+{
 	TTValue v, none;
 	
 	if (anOutput.valid()) {
@@ -572,7 +572,7 @@ TTErr jamoma_explorer_create(t_object *x, TTObject& returnedExplorer)
 	args.append(returnValueCallback);
 	
 	args.append((TTPtr)jamoma_explorer_default_filter_bank());
-
+    
 	returnSelectionCallback = TTObject("callback");
     baton = TTValue(TTPtr(x), (TTPtr)gensym("return_selection"));
 	returnSelectionCallback.set(kTTSym_baton, baton);
@@ -704,14 +704,14 @@ void JAMOMA_EXPORT jamoma_callback_return_ramped_value(void *o, TTUInt32 n, TTFl
     argv = (t_atom*)sysmem_newptr(sizeof(t_atom) * argc);
 	
 	for (i = 0; i < argc; i++)
-			atom_setfloat(argv+i, v[i]);
-
+        atom_setfloat(argv+i, v[i]);
+    
     // send the atom to the object using return_value method
     if (argc == 1)
         object_method(x, jps_return_value, _sym_float, argc, argv);
     else
         object_method(x, jps_return_value, _sym_list, argc, argv);
-
+    
     sysmem_freeptr(argv);
 }
 
@@ -801,10 +801,10 @@ void jamoma_callback_return_value_typed(const TTValue& baton, const TTValue& v)
 	
 	// unpack baton (a t_object *and the name of the method to call (default : jps_return_value))
     
-     // get Max wrapper object that was passed in
+    // get Max wrapper object that was passed in
 	x = (t_object*)((TTPtr)baton[0]);
 	
-     // get name of the method to call
+    // get name of the method to call
 	if (baton.size() >= 2) {
         
 		s_method = (t_symbol*)((TTPtr)baton[1]);
@@ -1000,9 +1000,9 @@ void jamoma_ttvalue_from_Atom(TTValue& v, t_symbol *msg, long argc, const t_atom
 			v.resize(argc);
 			start = 0;
 		}
-			
+        
 		// convert Atom to TTValue
-		for (i = 0; i < argc; i++) 
+		for (i = 0; i < argc; i++)
 		{
 			if (atom_gettype(argv+i) == A_LONG)
 				v[i+start] = (int)atom_getlong(argv+i);
@@ -1014,7 +1014,7 @@ void jamoma_ttvalue_from_Atom(TTValue& v, t_symbol *msg, long argc, const t_atom
 	}
 }
 
-/** Convert a TTSymbol "MyObjectMessage" into a t_symbol *"my/object/message" 
+/** Convert a TTSymbol "MyObjectMessage" into a t_symbol *"my/object/message"
  or return NULL if the TTSymbol doesn't begin by an uppercase letter */
 t_symbol *jamoma_TTName_To_MaxName(TTSymbol TTName)
 {
@@ -1098,7 +1098,7 @@ void jamoma_patcher_get_args(t_object *patcher, long *argc, t_atom **argv)
 		atom_setparse(argc, argv, text);
 	}
 	else if (hierarchy == gensym("poly")){
-	
+        
 		object_method(patcher, gensym("getassoc"), &assoc);
 		if (assoc)
 			object_attr_getvalueof(assoc, SymbolGen("args"), argc, argv);
@@ -1127,7 +1127,7 @@ t_symbol *jamoma_patcher_get_hierarchy(t_object *patcher)
 	else {
 		
 		if(object_attr_getobj(patcher, _sym_parentpatcher)) // a real topmost patcher shouldn't have parent
-		   return gensym("poly"); // poly case
+            return gensym("poly"); // poly case
 		
 		return _sym_topmost;
 		
@@ -1164,7 +1164,7 @@ void jamoma_patcher_get_context(t_object **patcher, TTSymbol& returnedContext)
 			found = YES;
 			break;
 		}
-
+        
 		obj = object_attr_getobj(obj, _sym_nextobject);
 	}
 	
@@ -1172,22 +1172,22 @@ void jamoma_patcher_get_context(t_object **patcher, TTSymbol& returnedContext)
 	if (!found) {
 		
 		/*	to -- don't get the context from the filename anymore because it make two ways to set it...
-		t_symbol * patcherName;
+         t_symbol * patcherName;
          
-		// try to get it from the patcher name
-		patcherName = object_attr_getsym(*patcher, _sym_filename);
-		if (patcherName != _sym_nothing) {
-			// Is there a ".model.maxpat" string in the patcher name ?
-			if (strstr(patcherName->s_name, ".model.maxpat")) {
-				returnedContext = kTTSym_model;
-				return;
-			}
-			// Is there a ".view.maxpat" string in the patcher name ?
-			else if (strstr(patcherName->s_name, ".view.maxpat")) {
-				returnedContext = kTTSym_view;
-				return;
-			}
-		}
+         // try to get it from the patcher name
+         patcherName = object_attr_getsym(*patcher, _sym_filename);
+         if (patcherName != _sym_nothing) {
+         // Is there a ".model.maxpat" string in the patcher name ?
+         if (strstr(patcherName->s_name, ".model.maxpat")) {
+         returnedContext = kTTSym_model;
+         return;
+         }
+         // Is there a ".view.maxpat" string in the patcher name ?
+         else if (strstr(patcherName->s_name, ".view.maxpat")) {
+         returnedContext = kTTSym_view;
+         return;
+         }
+         }
 		 */
 		
 		// in subpatcher look upper
@@ -1219,8 +1219,10 @@ void jamoma_patcher_get_class(t_object *patcher, TTSymbol context, TTSymbol& ret
 {
 	t_symbol	*patcherName, *hierarchy;
 	t_object	*upperPatcher;
-	TTString	s_toParse;
-	TTStringIter begin, end;
+    //	TTString	s_toParse;
+    //	TTStringIter begin, end;
+    std::string	s_toParse;
+	std::string::iterator begin, end;
 	
 	// extract class from the file name
 	patcherName =  object_attr_getsym(patcher, _sym_filename);
@@ -1228,37 +1230,37 @@ void jamoma_patcher_get_class(t_object *patcher, TTSymbol context, TTSymbol& ret
 	if (patcherName != _sym_nothing) {
 		
 		s_toParse = patcherName->s_name;
-	
+        
 		begin = s_toParse.begin();
 		end = s_toParse.end();
-
+        
 		// parse jmod.
 		if (!ttRegexForJmod->parse(begin, end)) {
 			
 			object_error(patcher, "jmod. prefix in %s is a 0.5 convention. Please use .module suffix instead", patcherName->s_name);
 			
-			s_toParse = TTString(ttRegexForJmod->end(), end);
+			s_toParse = std::string(ttRegexForJmod->end(), end);
 			begin = s_toParse.begin();
 			end = s_toParse.end();
 		}
 		// parse j.
 		else if (!ttRegexForJcom->parse(begin, end)) {
 			
-			s_toParse = TTString(ttRegexForJcom->end(), end);
+			s_toParse = std::string(ttRegexForJcom->end(), end);
 			begin = s_toParse.begin();
 			end = s_toParse.end();
 		}
 		
 		// parse .module or if not parse context (model or view)
 		if (!ttRegexForModule->parse(begin, end)) {
-			s_toParse = TTString(begin, ttRegexForModule->begin());
+			s_toParse = std::string(begin, ttRegexForModule->begin());
 			begin = s_toParse.begin();
 			end = s_toParse.end();
 		}
 		else if (context == kTTSym_model) {
 			
 			if (!ttRegexForModel->parse(begin, end)) {
-				s_toParse = TTString(begin, ttRegexForModel->begin());
+				s_toParse = std::string(begin, ttRegexForModel->begin());
 				begin = s_toParse.begin();
 				end = s_toParse.end();
 			}
@@ -1266,7 +1268,7 @@ void jamoma_patcher_get_class(t_object *patcher, TTSymbol context, TTSymbol& ret
 		else if (context == kTTSym_view) {
 			
 			if (!ttRegexForView->parse(begin, end)) {
-				s_toParse = TTString(begin, ttRegexForView->begin());
+				s_toParse = std::string(begin, ttRegexForView->begin());
 				begin = s_toParse.begin();
 				end = s_toParse.end();
 			}
@@ -1274,13 +1276,13 @@ void jamoma_patcher_get_class(t_object *patcher, TTSymbol context, TTSymbol& ret
 		
 		// parse .maxpat
 		if (!ttRegexForMaxpat->parse(begin, end)) {
-			s_toParse = TTString(begin, ttRegexForMaxpat->begin());
+			s_toParse = std::string(begin, ttRegexForMaxpat->begin());
 			begin = s_toParse.begin();
 			end = s_toParse.end();
 		}
 		// parse .maxhelp
 		else if (!ttRegexForMaxhelp->parse(begin, end)) {
-			s_toParse = TTString(begin, ttRegexForMaxhelp->begin());
+			s_toParse = std::string(begin, ttRegexForMaxhelp->begin());
 			begin = s_toParse.begin();
 			end = s_toParse.end();
             
@@ -1328,7 +1330,7 @@ void jamoma_patcher_get_name(t_object *patcher, TTSymbol context, TTSymbol& retu
 	
 	if (ac && av) {
         
-        // notice we have to test view case before model case 
+        // notice we have to test view case before model case
         // because a j.view can be in subpatcher too
         
         // for view : the second argument is the name
@@ -1336,8 +1338,8 @@ void jamoma_patcher_get_name(t_object *patcher, TTSymbol context, TTSymbol& retu
         if (context == kTTSym_view) {
             if (ac > 1)
                 argName = atom_getsym(av+1);
-		
-		// for model : the first argument is the name
+            
+            // for model : the first argument is the name
 		} else if (context == kTTSym_model || hierarchy == _sym_subpatcher)
 			argName = atom_getsym(av);
 		
@@ -1366,7 +1368,7 @@ void jamoma_patcher_share_info(t_object *patcher, t_object **returnedPatcher, TT
 	while (obj) {
 		_sym_jcomcontext = object_attr_getsym(obj, _sym_maxclass);
 		if (_sym_jcomcontext == _sym_jcommodel || _sym_jcomcontext == _sym_jcomview) {
-		
+            
 			// ask it patcher info
 			object_method(object_attr_getobj(obj, _sym_object), _sym_share, &patcherInfo);
 			
@@ -1459,7 +1461,7 @@ void jamoma_patcher_get_model_patcher(t_object *patcher, TTSymbol modelClass, t_
 			// look for _sym_modelfilename
 			_sym_objfilename = object_attr_getsym(obj, _sym_filename);
 			if (_sym_objfilename == _sym_modelfilename) {
-			
+                
 				*returnedModelPatcher = object_attr_getobj(obj, _sym_object);
 				break;
 			}
@@ -1509,12 +1511,12 @@ TTErr jamoma_patcher_get_info(t_object *obj, t_object **returnedPatcher, TTSymbo
 	TTSymbol	sharedName;
 	
 	*returnedPatcher = jamoma_patcher_get(obj);
-
+    
 	_sym_jcomcontext = object_classname(obj);
 	canShare = _sym_jcomcontext == gensym("j.model") || _sym_jcomcontext == gensym("j.view");
 	
 	patcher = *returnedPatcher;
-
+    
 	// Get the context, the class and the name of the patcher
 	if (*returnedPatcher) {
 		
@@ -1524,7 +1526,7 @@ TTErr jamoma_patcher_get_info(t_object *obj, t_object **returnedPatcher, TTSymbo
 			jamoma_patcher_share_info(*returnedPatcher, &sharedPatcher, sharedContext, sharedClass, sharedName);
 			
 			if (sharedPatcher && sharedContext && sharedClass && sharedName) {
-
+                
 				*returnedPatcher = sharedPatcher;
 				returnedContext = sharedContext;
 				returnedClass = sharedClass;
@@ -1592,7 +1594,7 @@ TTErr jamoma_patcher_get_info(t_object *obj, t_object **returnedPatcher, TTSymbo
                 
                 object_method(patcher, gensym("getassoc"), &assoc);
                 if (assoc) {
-
+                    
                     m = zgetfn(assoc, gensym("getindex"));
                     if(m) {
                         
@@ -1613,12 +1615,12 @@ TTErr jamoma_patcher_get_info(t_object *obj, t_object **returnedPatcher, TTSymbo
             returnedName = TTSymbol(s_toParse);
 		}
 	}
-		// if no patcher : stop the subscription process
+    // if no patcher : stop the subscription process
 	else {
 		object_error(obj, "Can't get the patcher. Subscription failed");
 		return kTTErrGeneric;
 	}
-
+    
 	return kTTErrNone;
 }
 
@@ -1626,12 +1628,18 @@ TTErr jamoma_patcher_get_info(t_object *obj, t_object **returnedPatcher, TTSymbo
 TTUInt32 jamoma_parse_bracket(t_symbol *s, TTString& si_format, TTString& ss_format)
 {
 	long		number = 0;
-	TTString	s_toParse = s->s_name;
-	TTString	s_number;
-	TTString	s_before;
-	TTString	s_after;
-	TTStringIter begin, end;
-	TTStringIter beginNumber, endNumber;
+    //	TTString	s_toParse = s->s_name;
+    //	TTString	s_number;
+    //	TTString	s_before;
+    //	TTString	s_after;
+    //	TTStringIter begin, end;
+    //	TTStringIter beginNumber, endNumber;
+    std::string	s_toParse = s->s_name;
+	std::string	s_number;
+	std::string	s_before;
+	std::string	s_after;
+	std::string::iterator begin, end;
+	std::string::iterator beginNumber, endNumber;
 	
 	begin = s_toParse.begin();
 	end = s_toParse.end();
@@ -1642,9 +1650,9 @@ TTUInt32 jamoma_parse_bracket(t_symbol *s, TTString& si_format, TTString& ss_for
 		beginNumber = ttRegexForBracket->begin();
 		endNumber = ttRegexForBracket->end();
 		
-		s_before = TTString(begin, ttRegexForBracket->begin()-1);
-		s_number = TTString(ttRegexForBracket->begin(), ttRegexForBracket->end());
-		s_after = TTString(ttRegexForBracket->end()+1, end);
+		s_before = std::string(begin, ttRegexForBracket->begin()-1);
+		s_number = std::string(ttRegexForBracket->begin(), ttRegexForBracket->end());
+		s_after = std::string(ttRegexForBracket->end()+1, end);
 		
 		sscanf(s_number.c_str(), "%ld", &number);
 		
@@ -1712,10 +1720,10 @@ t_symbol *jamoma_parse_dieze(t_object *x, t_symbol *address)
 	t_symbol	*hierarchy;
 	t_object	*patcher  = jamoma_patcher_get(x);
     /* TODO : use a TTRegex for this parsing
-	char		dieze[5];
-	char		args[64];
-	size_t		found = 0;
-	long		i, sd, sa;
+     char		dieze[5];
+     char		args[64];
+     size_t		found = 0;
+     long		i, sd, sa;
      */
     long		i;
 	long        ac = 0;
@@ -1744,37 +1752,37 @@ t_symbol *jamoma_parse_dieze(t_object *x, t_symbol *address)
 			
 			//object_post(x, "in jamoma_parse_dieze : TODO : use a TTRegex for this parsing");
 			/* TODO : use a TTRegex for this parsing
-			do {
-				
-				// prepare to parse #i
-				snprintf(dieze, sizeof(dieze), "#%li", i);
-				found = addressStr.find(dieze);
-				
-				// if #i found
-				if (found != string::npos) {
-					
-					// get av+i atom
-					if (i-1 < ac) {
-						
-						if (atom_gettype(av+i-1) == A_LONG)
-							snprintf(args, sizeof(args), "%li", atom_getlong(av+i-1));
-						else if (atom_gettype(av+i-1) == A_SYM)
-							snprintf(args, sizeof(args), "%s", atom_getsym(av+i-1)->s_name);
-						else {
-							i++;
-							continue;
-						}
-						
-						diezeStr = dieze;
-						argsStr	= args;
-						sd = diezeStr.size();
-						sa = argsStr.size();
-						addressStr.replace(found, sd, args, sa);
-					}
-				}
-				i++;
-				
-			} while (i-1 < ac); // while there are argument
+             do {
+             
+             // prepare to parse #i
+             snprintf(dieze, sizeof(dieze), "#%li", i);
+             found = addressStr.find(dieze);
+             
+             // if #i found
+             if (found != string::npos) {
+             
+             // get av+i atom
+             if (i-1 < ac) {
+             
+             if (atom_gettype(av+i-1) == A_LONG)
+             snprintf(args, sizeof(args), "%li", atom_getlong(av+i-1));
+             else if (atom_gettype(av+i-1) == A_SYM)
+             snprintf(args, sizeof(args), "%s", atom_getsym(av+i-1)->s_name);
+             else {
+             i++;
+             continue;
+             }
+             
+             diezeStr = dieze;
+             argsStr	= args;
+             sd = diezeStr.size();
+             sa = argsStr.size();
+             addressStr.replace(found, sd, args, sa);
+             }
+             }
+             i++;
+             
+             } while (i-1 < ac); // while there are argument
 			 */
 			
 			return gensym((char*)addressStr.data());
@@ -1815,7 +1823,7 @@ TTSymbol jamoma_file_write(t_object *x, long argc, const t_atom *argv, char* def
 				result = TTSymbol(fullpath);
 			}
 		}
-	} 
+	}
 	
 	// ... or open a dialog
 	if (result == kTTSymEmpty) {
